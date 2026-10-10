@@ -1,6 +1,7 @@
 #
 # Tests for Ai (2020) Enertech parameter set loads
 #
+import numpy as np
 import pytest
 
 import pybamm
@@ -45,3 +46,15 @@ class TestAi2020:
             assert param.evaluate(param[name](*value[0])) == pytest.approx(
                 value[1], abs=0.0001
             )
+
+    def test_electrolyte_diffusivity_units(self):
+        # Ai2020 and Xu2019 implement the same Valoen-Reimers fit; both must
+        # return m2/s (issue #5887: Ai2020 returned cm2/s)
+        c_e = pybamm.Scalar(1000)
+        T = pybamm.Scalar(298.15)
+        D_ai = pybamm.ParameterValues("Ai2020")["Electrolyte diffusivity [m2.s-1]"]
+        D_xu = pybamm.ParameterValues("Xu2019")["Electrolyte diffusivity [m2.s-1]"]
+        np.testing.assert_allclose(
+            D_ai(c_e, T).evaluate(), D_xu(c_e, T).evaluate(), rtol=1e-10
+        )
+        assert D_ai(c_e, T).evaluate() == pytest.approx(3.2227e-10, rel=1e-3)

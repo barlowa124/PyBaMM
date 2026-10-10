@@ -450,7 +450,8 @@ def electrolyte_diffusivity_Ai2020(c_e, T):
 
     D_c_e = 10 ** (-4.43 - 54 / (T - 229 - 5e-3 * c_e) - 0.22e-3 * c_e)
 
-    return D_c_e
+    # cm2/s to m2/s
+    return D_c_e * 1e-4
 
 
 def electrolyte_conductivity_Ai2020(c_e, T):

@@ -1,5 +1,9 @@
 # [Unreleased](https://github.com/pybamm-team/PyBaMM/)
 
+## Bug fixes
+
+- `electrolyte_diffusivity_Ai2020` now converts the Valøen–Reimers fit from cm2/s to m2/s, matching `electrolyte_diffusivity_Valoen2005`; it previously returned values 10^4 times too large. ([#5887](https://github.com/pybamm-team/PyBaMM/issues/5887))
+
 # [v26.10.0.0](https://github.com/pybamm-team/PyBaMM/tree/pybamm-v26.10.0.0) - 2026-10-09
 
 ## Breaking changes
